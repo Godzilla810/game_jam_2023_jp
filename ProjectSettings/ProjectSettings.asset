@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: C_Team
+  companyName: Block_of_Hope
   productName: Block_of_Hope_pre
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -383,7 +383,9 @@ PlayerSettings:
       m_SubKind: App Store
   - m_BuildTarget: Android
     m_Icons:
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 2800000, guid: 91281512a0d4e92489671359c58e0969, type: 3}
+      - {fileID: 2800000, guid: 46900a13186b0894aa74175040650265, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
