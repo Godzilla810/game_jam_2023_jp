@@ -8,21 +8,22 @@ public class Boss : MonoBehaviour
 {
     //實例化
     public static Boss instance;
-    void Awake() {
-        if (instance != null){
+    void Awake()
+    {
+        if (instance != null)
+        {
             return;
         }
         instance = this;
     }
 
     private Animator animator;
+    private int hp;
     public int dmgCount;
     private int dieCount;
-    private Transform spawnPoint;
 
-    public Transform ru,rd,lu,ld;
+    public Transform[] spawnPoints;
     public GameObject enemyPrefab;     // Prefab of the enemy to be generated
-    private int hp;
 
     public GameObject KeyUI;
 
@@ -30,8 +31,8 @@ public class Boss : MonoBehaviour
     {
         hp = 5;
         animator = GetComponent<Animator>();
-        dmgCount=0;
-        dieCount=0;
+        dmgCount = 0;
+        dieCount = 0;
     }
 
     private void Update()
@@ -39,33 +40,46 @@ public class Boss : MonoBehaviour
         // Check for player input to switch between animator states
         if (Input.GetKeyDown(KeyCode.T))
         {
-            // Trigger the "Jump" animation state
             animator.SetTrigger("Talk");
         }
-        else if (Input.GetKeyDown(KeyCode.I))
+        else if (dmgCount == hp)
         {
-            animator.SetTrigger("Dmg");
-            GenerateNewEnemy();
-            StartCoroutine(DelayOnHit());
+            Die();
         }
-        else if (Input.GetKeyDown(KeyCode.O)||dmgCount==hp)
+    }
+    public void Die()
+    {
+        animator.SetTrigger("Die");
+        dmgCount = 0;
+        dieCount++;
+        if (dieCount == 4)
         {
-            animator.SetTrigger("Die");
-            dmgCount=0;
-            dieCount++;
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            animator.SetTrigger("Idle");
-        }
-        if(dieCount==4){
-            StartCoroutine(DestroyEnemyWithDelay());
+            StartCoroutine(DestroyBossWithDelay());
             KeyUI.SetActive(true);
             Keyforui.Keyget();
         }
-    } 
+    }
+    public void GetDamage()
+    {
+        animator.SetTrigger("Dmg");
+        GenerateNewEnemy();
+        BossMove();
+        StartCoroutine(DelayOnHit());
+    }
+    private void GenerateNewEnemy()
+    {
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = spawnPoints[randomIndex];
+        Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+    }
+    private void BossMove()
+    {
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        Transform movePoint = spawnPoints[randomIndex];
+        transform.position = movePoint.position;
+    }
 
-    IEnumerator DestroyEnemyWithDelay()
+    IEnumerator DestroyBossWithDelay()
     {
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
@@ -75,14 +89,8 @@ public class Boss : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         dmgCount++;
     }
-    private void GenerateNewEnemy(){
-        // Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0);
-        // Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
-    }
-
-    public void Bosskey ()
+    public void Bosskey()
     {
         KeyUI.SetActive(true);
     }
 }
-

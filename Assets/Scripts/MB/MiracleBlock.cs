@@ -5,13 +5,12 @@ using UnityEngine;
 public class MiracleBlock : MonoBehaviour
 {
     private Rigidbody2D currentBlockRb;
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
 
     private int wallLayer;
     private int enemyLayer;
     private int playerLayer;
     private int bossLayer;
-
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +22,6 @@ public class MiracleBlock : MonoBehaviour
         enemyLayer = LayerMask.NameToLayer("Enemy");
         playerLayer = LayerMask.NameToLayer("Player");
         bossLayer = LayerMask.NameToLayer("Boss");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -59,15 +52,7 @@ public class MiracleBlock : MonoBehaviour
         //碰boss
         else if (collision.gameObject.layer == bossLayer)
         {
-            collision.gameObject.GetComponent<Animator>().SetTrigger("Dmg");
-            Boss.instance.dmgCount++;
+            Boss.instance.GetDamage();
         }
     }
-
-    // public void PullStatus(){
-    //     spriteRenderer.color = transparent;
-    // }
-    // public void ShootStatus(){
-    //     spriteRenderer.color = originalColor;
-    // }
 }
