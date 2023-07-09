@@ -23,10 +23,8 @@ public class Boss : MonoBehaviour
     public Transform ru,rd,lu,ld;
     public GameObject enemyPrefab;     // Prefab of the enemy to be generated
     private int hp;
-    //private float minX;
-    //private float maxX;
-    //private float minY;
-    //private float maxY;
+
+    public GameObject KeyUI;
 
     private void Start()
     {
@@ -34,10 +32,6 @@ public class Boss : MonoBehaviour
         animator = GetComponent<Animator>();
         dmgCount=0;
         dieCount=0;
-        //minX = Mathf.Min(ru.position.x, rd.position.x, lu.position.x, ld.position.x);
-        //maxX = Mathf.Max(ru.position.x, rd.position.x, lu.position.x, ld.position.x);
-        //minY = Mathf.Min(ru.position.y, rd.position.y, lu.position.y, ld.position.y);
-        //maxY = Mathf.Max(ru.position.y, rd.position.y, lu.position.y, ld.position.y);
     }
 
     private void Update()
@@ -66,6 +60,8 @@ public class Boss : MonoBehaviour
         }
         if(dieCount==4){
             StartCoroutine(DestroyEnemyWithDelay());
+            KeyUI.SetActive(true);
+            Keyforui.Keyget();
         }
     } 
 
@@ -80,8 +76,13 @@ public class Boss : MonoBehaviour
         dmgCount++;
     }
     private void GenerateNewEnemy(){
-        //Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0);
-        //Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+        // Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0);
+        // Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+    }
+
+    public void Bosskey ()
+    {
+        KeyUI.SetActive(true);
     }
 }
 
