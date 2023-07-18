@@ -7,15 +7,11 @@ public class Enemy : MonoBehaviour
 {
     public float attackRange;
     public float speed;
-    private Rigidbody2D enemyRb;
     private GameObject player;
-    private PlayerStatus playerStatus;
     // Start is called before the first frame update
     void Start()
     {
-        enemyRb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
-        playerStatus = PlayerStatus.instance;
     }
 
     // Update is called once per frame
@@ -33,9 +29,8 @@ public class Enemy : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            playerStatus.Damage();
+        if (other.gameObject.tag == "Player"){
+            other.gameObject.GetComponent<PlayerStatus>().Damage();
         }
     }
     void OnDrawGizmosSelected()     //在Scene視圖中繪製調試或可視化信息的圖形元素

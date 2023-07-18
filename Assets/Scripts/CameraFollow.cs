@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class camera_folloe : MonoBehaviour
+public class CameraFollow : MonoBehaviour
 {
     public Transform player; // Reference to the player's Transform component
     public float newFOV = 120f; // Desired FOV value

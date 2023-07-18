@@ -10,6 +10,7 @@ TagManager:
   - Item
   - mb
   - special
+  - enemy
   layers:
   - Default
   - TransparentFX
